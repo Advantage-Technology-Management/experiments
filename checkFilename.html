@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual file name parser</title>
+<script>
+  function parseFilenames() {
+    const languages = ['en','fr','enfr'];
+    const colours = ['Light Navy','Light Blue'];
+    const presentationStyles = ['Lay Down','On Figure','On Form','Swatch'];
+    const JFAngles = ['Forward-facing','Rear-facing','Left-facing','Right-facing','Left-profile','Right-profile','Top-down','Underside'];
+    const angles = ['front','angle','side','back','open','closed','beauty','banner'];
+
+
+    
+    // Get the filenames from the input field
+    var filenamesInput = document.getElementById("filenamesInput").value;
+    
+    /**filenamesInput = 
+        "S4WP045318_Light Navy_On Figure_Forward-facing.jpg,\
+        S4WP045318_Light Navy_On Figure_Left-facing.jpg,\
+        S4WP045318_Light Navy_On Figure_Rear-facing.jpg,\
+        S4WP045318_Light Navy_Swatch_Forward-facing.jpg,\
+        S4WP045318_Bad Colour_On Figure_Rear-facing.jpg,\
+        20506931_enfr_angle.png,\
+        20506931_enfr_back.png,\
+        20506931_enfr_front.png,\
+        3346470438781_enfr_01_front_white.jpg,\
+        0095008006260_swatch.png,\
+        0095008006260_enfr_05_front_white.jpg,\
+        0095008006260_enfr_04_front_white.jpg";
+*/
+    // Split the input by commas to get individual filenames
+    var filenames = filenamesInput.split(',');
+
+    // Display the parsed parts for each filename
+    var parsedResult = document.getElementById("parsedResult");
+    parsedResult.innerHTML = ""; // Clear previous results
+    
+    filenames.forEach(function(filename) {
+      // Split the filename using underscore as the delimiter
+      var noExtension = filename.trim().split('.')
+      var parts = noExtension[0].trim().split('_');
+    
+      var P2Line = document.createElement("p");
+      var P3Line = document.createElement("p");
+      var P4Line = document.createElement("p");
+      var lineSeparator = document.createElement("p");
+      if (languages.includes(parts[1])) {
+        P2Line.textContent = "P2 is valid language value of " + parts[1] + " indicates SDM or PCX";
+        if (angles.includes(parts[2])) {
+            P3Line.textContent = "P3 value of " + parts[2] + " is legacy PCX bogus angle for presentation order " + (angles.indexOf(parts[2])+1);
+            P4Line.textContent = "VALID PCX filename.  Lookup " + parts[0] + " as article number.";
+        }
+        else {
+            if (+parts[2] >= 1 && +parts[2] <= 24) {
+                P3Line.textContent = "P3 " + parts[2] + " is a valid presentation order " + parts[2];
+                P4Line.textContent = "VALID PCX or SDM filename.  If " + parts[0] + "found as article then PCX, if UPC then SDM";
+            }
+            else {
+                P3Line.textContent = "INVALID PCX or SDM filename.  P3 " + parts[2] + " is an invalid presentation order ";
+            }
+        }
+    
+        if (parts[4] == 'front' && parts[5] == 'white') {
+            P4Line.textContent = "VALID SDM legacy filename.  Remove front_white and lookup " + parts[0] + " as UPC";
+        }
+      } 
+      else if (colours.includes(parts[1])) {
+        P2Line.textContent = "P2 is valid colour value " + parts[1] + " indicates JF";
+        if (presentationStyles.includes(parts[2]) && JFAngles.includes(parts[3])) {
+            P3Line.textContent = "P3 of " + parts[2] + " and P4 of " + parts[3] + " are valid presentation type and angle";
+            P4Line.textContent = "VALID JF filename - Lookup " + parts[0] + "_" + parts[1] + " as article number";
+        }
+        else {
+            P3Line.textContent = "INVALID JF filename- One of P3 " + parts[2] + " or P4 " + parts[3] + " are invalid presentation style or angle";
+        }
+      }
+      
+    
+      else {
+        P2Line.textContent = "INVALID filename of uknown LOB.  P2 value " + parts[1] + " is not language or valid colour.";
+      }
+
+      //var line = document.createElement("div");
+      var filenamePart = 1;
+      var line = document.createElement("div");
+      
+      parts.forEach(function(part) {
+        if (filenamePart == 1) {
+            
+            line.textContent = "File: " + filename + ": P" + filenamePart + ": " + part;
+        }
+        else { 
+            line.textContent = line.textContent + ", P" + filenamePart + ": " + part;
+        }
+        
+        filenamePart++;
+      });
+      // Add a line break after each filename
+      parsedResult.appendChild(line);
+      parsedResult.appendChild(P2Line);
+      parsedResult.appendChild(P3Line);
+      parsedResult.appendChild(P4Line);
+      lineSeparator.textContent = "================";
+      parsedResult.appendChild(lineSeparator);
+
+    });
+  }
+
+
+</script>
+</head>
+<body>
+  <h2>Filename Parser</h2>
+  <label for="filenamesInput">Enter Filenames (Separated by Commas):</label>
+  <input type="text" id="filenamesInput">
+  <button onclick="parseFilenames()">Parse</button>
+  <p>
+    <br>
+  </p>
+  <div id="parsedResult"></div>
+</body>
+</html>
