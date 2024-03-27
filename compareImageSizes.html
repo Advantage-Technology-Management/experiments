@@ -3,64 +3,84 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Image Resizer</title>
+<title>Compare Image Sizes</title>
 <style>
-  #imageContainer {
+  .imageContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     margin-top: 20px;
   }
-  .resizedImage {
+  .imageBox {
     margin: 10px;
     border: 1px solid #ccc;
     overflow: hidden;
   }
-  .resizedImage img {
-    width: 100%;
+  .imageBox img {
+    max-width: 100%;
     height: auto;
   }
 </style>
 </head>
 <body>
 
-<input type="text" id="imageUrlInput" placeholder="Enter Image URL">
-<button onclick="resizeImage()">Resize Image</button>
+<div class="imageContainer">
+  <div class="imageBox" style="width: 100px;">
+    <img src="<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Resizer</title>
+<style>
+  .imageContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+  .imageBox {
+    margin: 10px;
+    border: 1px solid #ccc;
+    overflow: hidden;
+  }
+  .imageBox img {
+    max-width: 100%;
+    height: auto;
+  }
+</style>
+</head>
+<body>
 
-<div id="imageContainer"></div>
+<div class="imageContainer">
+  <div class="imageBox" style="width: 100px;">
+    <img src="https://dis-prod.assetful.loblaw.ca/content/dam/loblaw-companies-limited/product-assets/apparel/apparel/women-s-tops/woven-tops-women-s/shirt/s4wp046866_ea/s4wp046866_blue_ea/S4WP046866_Blue_EA_Lay%20Down_SAP.tif/_jcr_content/renditions/cq5dam.web.4096.4096.jpeg?imWidth=100" alt="Image 100px">
+  </div>
+  <div class="imageBox" style="width: 200px;">
+    <img src="hhttps://dis-prod.assetful.loblaw.ca/content/dam/loblaw-companies-limited/product-assets/apparel/apparel/women-s-tops/woven-tops-women-s/shirt/s4wp046866_ea/s4wp046866_blue_ea/S4WP046866_Blue_EA_Lay%20Down_SAP.tif/_jcr_content/renditions/cq5dam.web.4096.4096.jpeg?imWidth=200" alt="Image 200px">
+  </div>
+  <div class="imageBox" style="width: 300px;">
+    <img src="https://dis-prod.assetful.loblaw.ca/content/dam/loblaw-companies-limited/product-assets/apparel/apparel/women-s-tops/woven-tops-women-s/shirt/s4wp046866_ea/s4wp046866_blue_ea/S4WP046866_Blue_EA_Lay%20Down_SAP.tif/_jcr_content/renditions/cq5dam.web.4096.4096.jpeg?imWidth=300" alt="Image 300px">
+  </div>
+  <div class="imageBox" style="width: 400px;">
+    <img src="https://dis-prod.assetful.loblaw.ca/content/dam/loblaw-companies-limited/product-assets/apparel/apparel/women-s-tops/woven-tops-women-s/shirt/s4wp046866_ea/s4wp046866_blue_ea/S4WP046866_Blue_EA_Lay%20Down_SAP.tif/_jcr_content/renditions/cq5dam.web.4096.4096.jpeg?imWidth=400" alt="Image 400px">
+  </div>
+</div>
 
-<script>
-function resizeImage() {
-  var imageUrl = document.getElementById('imageUrlInput').value;
-  var sizes = [100, 200, 300, 400]; // You can adjust these sizes as needed
-
-  var imageContainer = document.getElementById('imageContainer');
-  imageContainer.innerHTML = '';
-
-  sizes.forEach(function(size) {
-    var imageDiv = document.createElement('div');
-    imageDiv.classList.add('resizedImage');
-
-    var img = new Image();
-    img.src = imageUrl;
-    img.onload = function() {
-      var canvas = document.createElement('canvas');
-      canvas.width = size;
-      canvas.height = size * (img.height / img.width);
-
-      var ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-      var resizedImg = new Image();
-      resizedImg.src = canvas.toDataURL('image/jpeg');
-
-      imageDiv.appendChild(resizedImg);
-    };
-
-    imageContainer.appendChild(imageDiv);
-  });
-}
-</script>
+</body>
+</html>
+" alt="Image 100px">
+  </div>
+  <div class="imageBox" style="width: 200px;">
+    <img src="https://via.placeholder.com/200" alt="Image 200px">
+  </div>
+  <div class="imageBox" style="width: 300px;">
+    <img src="https://via.placeholder.com/300" alt="Image 300px">
+  </div>
+  <div class="imageBox" style="width: 400px;">
+    <img src="https://via.placeholder.com/400" alt="Image 400px">
+  </div>
+</div>
 
 </body>
 </html>
