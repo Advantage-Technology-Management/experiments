@@ -35,54 +35,38 @@
 
 <script>
 
-function performQuery() {
-    // Get the value from the input box
+async function performQuery() {
     var inputValue = document.getElementById("queryInput").value;
-
-    // Define the URL with the input value as a parameter
     var url = "https://dis-dev1.assetful.loblaw.ca/products/" + inputValue + "/.json";
-
-
-    async function fetchData() {
-        try {
-            const response = await fetch(url, { 
-                method: 'GET',
-                headers: {
-                            //'Content-Type': 'txt/html;charset=utf-8', // 'application/json;charset=utf-8',
-                            //'X-Content-Type-Options': 'nosniff',
-                            //'Origin': 'code.advantagetmc.com',
-                            //'x-requested-with': 'XMLHttpRequest',
-                            'Cache-Control': 'no-cache',
-                            //'Authorization': 'Bearer token',
-                            //'Access-Control-Allow-Origin': '*',
-                            //'Referrer Policy': 'strict-origin-when-cross-origin',
-                            'Accept-Encoding': 'gzip, deflate, br',
-                            //'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0',
-                            'Accept': 'application/json;charset=utf-8'
-                            //,text/html;charset=utf-8,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
-                        },
-                mode: "cors"
-            })
-            
-            ;
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const ndjson = await response.text();
-            const jsonData = ndjson.split('\n').map(line => JSON.parse(line));
-            displayData(jsonData);
-        } catch (error) {
-            console.error('Error:', error);
+    try {
+        const response = await fetch(url, { 
+            method: 'GET',
+            headers: {
+                        //'Content-Type': 'txt/html;charset=utf-8', // 'application/json;charset=utf-8',
+                        //'X-Content-Type-Options': 'nosniff',
+                        //'Origin': 'code.advantagetmc.com',
+                        //'x-requested-with': 'XMLHttpRequest',
+                        'Cache-Control': 'no-cache',
+                        //'Authorization': 'Bearer token',
+                        //'Access-Control-Allow-Origin': '*',
+                        //'Referrer Policy': 'strict-origin-when-cross-origin',
+                        'Accept-Encoding': 'gzip, deflate, br',
+                        //'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0',
+                        'Accept': 'application/json;charset=utf-8'
+                        //,text/html;charset=utf-8,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+                    },
+            mode: "cors"
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
+        const ndjson = await response.text();
+        const jsonData = ndjson.split('\n').map(line => JSON.parse(line));
+        displayData(jsonData);
+    } catch (error) {
+        console.error('Error:', error);
     }
-
 }
-
-
-
-
-
-
     
 // Function to display JSON data with images and image angles
 function displayData(jsonData) {
