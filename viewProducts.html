@@ -42,8 +42,10 @@ function performQuery() {
     // Define the URL with the input value as a parameter
     var url = "https://dis-dev1.assetful.loblaw.ca/products/" + inputValue + "/.json";
 
-    // Perform the HTTP GET request using Fetch API
-    fetch(url, { 
+
+    async function fetchData() {
+        try {
+            const response = await fetch(url, { 
                 method: 'GET',
                 headers: {
                             //'Content-Type': 'txt/html;charset=utf-8', // 'application/json;charset=utf-8',
@@ -61,16 +63,27 @@ function performQuery() {
                         },
                 mode: "cors"
             })
-    .then(response => response.json())
-    .then(data = data.json())
-    .then(data => {
-        displayData(data);
-    })
-    .catch(error => {
+            
+            ;
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const ndjson = await response.text();
+            const jsonData = ndjson.split('\n').map(line => JSON.parse(line));
+            displayData(jsonData);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
 
-        console.error('Error:', error);
-    });
-}
+
+
+
+
+
+
+
+    
 // Function to display JSON data with images and image angles
 function displayData(jsonData) {
     var productsDiv = document.getElementById("products");
