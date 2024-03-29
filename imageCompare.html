@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Viewer</title>
+<style>
+    /* CSS for styling */
+    .image-container {
+        
+        
+        justify-content: center;
+    }
+    .image-container img {
+        margin: 10px;
+    
+        height: auto;
+    }
+</style>
+</head>
+<body>
+
+<div class="image-container"></div>
+
+<script>
+    // Array of image URLs
+    var LOB = "joe-fresh";
+
+    var imageUrls = [   
+    "S4WR046677_Pink_Swatch_Forward-facing.jpg, 2000 x 1481, 1.5 MB",
+    "S4WR046677_Pink_Lay Down_Rear-facing.jpg, 1080 x 1080, 276.1 KB",
+    "S4WR046677_Pink_Lay Down_Left-facing.jpg, 1080 x 1080, 209.3 KB",
+    "S4WR046677_Pink_Lay Down_Forward-facing.jpg, 1080 x 1080, 141.6 KB",
+    "S4WP046868_Medium Wash_On Figure_Forward-facing.jpg, 4000 x 4000, 12.4 MB"
+    ];
+
+    // Function to display images with variable widths
+    function displayImagesWithVariations(url) {
+        var container = document.querySelector('.image-container');
+        container.innerHTML = '';
+        url = url.split(',')[0];
+
+        // Width variations
+        var widths = [200, 400, 600];
+
+        // Create and append image elements with different widths
+        widths.forEach(function(width) {
+            var img = document.createElement('img');
+           
+
+            img.src = "https://dis-dev1.assetful.loblaw.ca/content/dam/loblaw-companies-limited/product-staging/manual/imagequalitytest/" + LOB + "/" + url + '/_jcr_content/renditions/cq5dam.web.4096.4096.jpeg?width=' + width; // Append width as query parameter
+
+            img.alt = 'Image';
+            container.appendChild(img);
+        });
+    }
+
+    // Function to initialize the image list
+    function initializeImageList() {
+        var container = document.querySelector('.image-container');
+
+        // Create and append image list elements
+        imageUrls.forEach(function(url) {
+            var div = document.createElement('div');
+            var link = document.createElement('a');
+            link.href = '#';
+            link.textContent = url;
+            link.onclick = function() {
+                displayImagesWithVariations(url);
+                return false;
+            };
+            div.appendChild(link);
+            container.appendChild(div);
+            container.appendChild(document.createElement('br'));
+        });
+    }
+
+    // Initialize the image list
+    initializeImageList();
+</script>
+
+</body>
+</html>
