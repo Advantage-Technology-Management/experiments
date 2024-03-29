@@ -87,14 +87,14 @@ function displayData(jsonData) {
 
             var img = document.createElement("img");
             img.src = image.url + "?width=200";
-            img.alt = image.angle;
+            img.alt = image.url;
             imageContainer.appendChild(img);
 
             var imageInfo = document.createElement("div");
             imageInfo.classList.add("image-info");
 
             var languageInfo = document.createElement("p");
-            languageInfo.textContent = "Languuge: " + image.langauge;
+            languageInfo.textContent = "Language: " + image.langauge;
             imageInfo.appendChild(languageInfo);
 
             var presentationOrderInfo = document.createElement("p");
