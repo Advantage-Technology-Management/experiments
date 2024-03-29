@@ -93,21 +93,21 @@ function displayData(jsonData) {
             var imageInfo = document.createElement("div");
             imageInfo.classList.add("image-info");
 
-            var presentationOrderInfo = document.createElement("p");
-            presentationOrderInfo.textContent = "Presentation Type: " + image.presentationType;
-            imageInfo.appendChild(presentationOrderInfo);
-
-            var angleInfo = document.createElement("p");
-            angleInfo.textContent = "Angle: " + image.angle;
-            imageInfo.appendChild(angleInfo);
-
             var languageInfo = document.createElement("p");
-            languageInfo.textContent = "Language: " + image.langauge;
-            imageInfo.appendChild(languageInfo);
+            languageInfo.textContent = "Language: " + image.language;
+            languageInfo.appendChild(languageInfo);
+
+            var presentationOrderInfo = document.createElement("p");
+            presentationOrderInfo.textContent = "Presentation Order: " + image.presentationOrder;
+            presentationOrderInfo.appendChild(presentationOrderInfo);
 
             var presentationTypeInfo = document.createElement("p");
             presentationTypeInfo.textContent = "Presentation Type: " + image.presentation_type;
             imageInfo.appendChild(presentationTypeInfo);
+
+            var angleInfo = document.createElement("p");
+            angleInfo.textContent = "Angle: " + image.angle;
+            angleInfo.appendChild(angleInfo);
 
             var URLInfo = document.createElement("p");
             presentationTypeInfo.textContent = "URL: " + image.url;
