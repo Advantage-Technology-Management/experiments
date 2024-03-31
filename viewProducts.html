@@ -77,8 +77,8 @@ function displayData(jsonData) {
         productDiv.classList.add("product");
         
         var productInfo = document.createElement("p");
-        productInfo.innerHTML = "<strong>Product Type:</strong> " + product.product_type + "<br>" +
-                                 "<strong>Article Number:</strong> " + product.liam + "<br>";
+        productInfo.innerHTML = "<strong>LOB:</strong> " + product.product_type + "<br>" +
+                                 "<strong>LIAM:</strong> " + product.liam + "<br>";
         productDiv.appendChild(productInfo);
         
         product.image_angles.forEach(function(image) {
@@ -110,7 +110,7 @@ function displayData(jsonData) {
             imageContainer.appendChild(angleInfo);
 
             var URLInfo = document.createElement("p");
-            URLInfo.textContent = "URL: " + image.url;
+            URLInfo.textContent = "Pristine URL: " + image.url;
             imageContainer.appendChild(URLInfo);
 
             imageContainer.appendChild(imageInfo);
