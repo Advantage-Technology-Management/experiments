@@ -4,28 +4,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Image Viewer</title>
+<span class="page-title">Pristine static rendition (2048 and then 4096) and dynamic size quality comparisons</span>
 <style>
     /* CSS for styling */
-    
+    .page-title {
+        font-weight:bold;
+        font-size:large;
+        text-align: center;
+        
+      }
     .image-container {
         /*display: flex;*/
         position: relative;
         top: 200px;
-        flex-wrap: wrap;
+        /*flex-wrap: wrap;*/
         justify-content: center;
         text-align: center; /* Center align the text */
     }
     .image-container img {
         margin: 10px;
         height: auto;
-        max-width: 100%; /* Ensure the image fits within its container */
+        /**max-width: 100%; /* Ensure the image fits within its container */
     }
     .image-width {
         margin-top: 5px; /* Add some margin between the image and the text */
     }
     .dropdown-container {
         position: fixed;
-        top: 10px;
+        top: 30px;
         left: 10px;
         z-index: 999;
         background-color: #ffffff;
@@ -36,7 +42,7 @@
     }
     .width-inputs {
         position: fixed;
-        top: 80px; /* Adjust the top position as needed */
+        top: 100px; /* Adjust the top position as needed */
         left: 10px;
         z-index: 999;
         background-color: #ffffff;
@@ -65,16 +71,17 @@
     <option value=".jpeg">.jpeg</option>
     <option value=".png">.png</option>
     </select>
-    <label for="size>">Pristine size:</label>
+<!-- <label for="size>">Pristine size:</label>
     <select name="size" id="size">
     <option value="2048">2048</option>
     <option value="4096">4096</option>
     </select>
+-->
     <br>
     Width 1: <input type="text" id="width1" value="64"><br>
     Width 2: <input type="text" id="width2" value="120"><br>
-    Width 3: <input type="text" id="width3" value="400"><br>
-    Width 4: <input type="text" id="width4" value="800">
+    Width 3: <input type="text" id="width3" value="340"><br>
+    Width 4: <input type="text" id="width4" value="720">
 </div>
 <div class="image-container"></div>
 
@@ -212,13 +219,27 @@
 
         // Create and append image elements with different widths
         widths.forEach(function(width) {
-            var img = document.createElement('img');
-            img.src = "https://dis-dev1.assetful.loblaw.ca/content/dam/loblaw-companies-limited/product-staging/manual/imagequalitytest/" + 
+            var img1 = document.createElement('img');
+            var img2 = document.createElement('img');
+
+ /*         img.src = "https://dis-dev1.assetful.loblaw.ca/content/dam/loblaw-companies-limited/product-staging/manual/imagequalitytest/" + 
             document.getElementById('lobSelect').value + "/" + selectedImageUrl + '/_jcr_content/renditions/cq5dam.web.' + 
             document.getElementById('size').value +'.' + document.getElementById('size').value + 
             document.getElementById('format').value + '?width=' + width; // Append width as query parameter
             img.alt = 'Image';
             container.appendChild(img);
+*/
+            img1.src = "https://dis-dev1.assetful.loblaw.ca/content/dam/loblaw-companies-limited/product-staging/manual/imagequalitytest/" + 
+            document.getElementById('lobSelect').value + "/" + selectedImageUrl + '/_jcr_content/renditions/cq5dam.web.2048.2048' + 
+            document.getElementById('format').value + '?width=' + width; // Append width as query parameter
+            img1.alt = 'Image';
+            container.appendChild(img1);
+
+            img2.src = "https://dis-dev1.assetful.loblaw.ca/content/dam/loblaw-companies-limited/product-staging/manual/imagequalitytest/" + 
+            document.getElementById('lobSelect').value + "/" + selectedImageUrl + '/_jcr_content/renditions/cq5dam.web.4096.4096' + 
+            document.getElementById('format').value + '?width=' + width; // Append width as query parameter
+            img2.alt = 'Image';
+            container.appendChild(img2);
 
             // Add text display of image width
             var widthText = document.createElement('p');
