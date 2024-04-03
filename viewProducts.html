@@ -41,10 +41,14 @@
 
         async function performQuery() {
             var inputValues = document.getElementById("queryInput").value.split(',');
+            var productsDiv = document.getElementById("products");
+            productsDiv.innerHTML = ''; // Clear previous results
+            
             for (let inputValue of inputValues) {
                 await fetchData(inputValue.trim());
             }
         }
+        
 
         async function fetchData(inputValue) {
             var url = "https://dis-dev1.assetful.loblaw.ca/products/" + inputValue + "/.json";
