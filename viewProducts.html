@@ -62,15 +62,19 @@
                 }
                 const ndjson = await response.text();
                 const jsonData = ndjson.split('\n').map(line => JSON.parse(line));
-                displayData(jsonData);
+                displayData(jsonData, inputValue);
             } catch (error) {
                 console.error('Error:', error);
             }
         }
 
         // Function to display JSON data with images and image angles
-        function displayData(jsonData) {
+        function displayData(jsonData, inputValue) {
             var productsDiv = document.getElementById("products");
+
+            var queryContainer = document.createElement("div");
+            queryContainer.innerHTML = "<h3>Query Input: " + inputValue + "</h3>";
+            productsDiv.appendChild(queryContainer);
 
             jsonData.forEach(function (product) {
                 var productDiv = document.createElement("div");
@@ -94,7 +98,7 @@
                     imageContainer.classList.add("image-info");
 
                     var languageInfo = document.createElement("p");
-                    languageInfo.textContent = "Language: " + image.langauge;
+                    languageInfo.textContent = "Language: " + image.language;
                     imageContainer.appendChild(languageInfo);
 
                     var presentationOrderInfo = document.createElement("p");
@@ -117,7 +121,7 @@
                     productDiv.appendChild(imageContainer);
                 });
 
-                productsDiv.appendChild(productDiv);
+                queryContainer.appendChild(productDiv);
             });
         }
 
