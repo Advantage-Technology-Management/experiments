@@ -2,124 +2,131 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Display Images for a Given LOB and LIAM</title>
-<style>
-.product {
-    margin-bottom: 10px;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 10px;
-}
-.image-container {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 10px;
-}
-.image-container img {
-    margin-right: 10px;
-    max-width: 300px;
-    max-height: 300px;
-}
-.image-info {
-    display: flex;
-    flex-direction: column;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Images for Given LOBs and LIAMs</title>
+    <style>
+        .product {
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        .image-container {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+
+        .image-container img {
+            margin-right: 10px;
+            max-width: 300px;
+            max-height: 300px;
+        }
+
+        .image-info {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
 </head>
+
 <body>
 
-<h2>Display Images for a Given LOB and LIAM</h2>
+    <h2>Display Images for Given LOBs and LIAMs</h2>
 
-<script>
+    <script>
 
-async function performQuery() {
-    var inputValue = document.getElementById("queryInput").value;
-    var url = "https://dis-dev1.assetful.loblaw.ca/products/" + inputValue + "/.json";
-    try {
-        const response = await fetch(url, { 
-            method: 'GET',
-            headers: {
-                'Cache-Control': 'no-cache',
-                'Accept': 'application/json;charset=utf-8'
-            },
-            mode: "cors"
-        });
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+        async function performQuery() {
+            var inputValues = document.getElementById("queryInput").value.split(',');
+            for (let inputValue of inputValues) {
+                await fetchData(inputValue.trim());
+            }
         }
-        const ndjson = await response.text();
-        const jsonData = ndjson.split('\n').map(line => JSON.parse(line));
-        displayData(jsonData);
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}
-    
-// Function to display JSON data with images and image angles
-function displayData(jsonData) {
-    var productsDiv = document.getElementById("products");
-    
-    // Clear previous data
-    productsDiv.innerHTML = '';
 
-    jsonData.forEach(function(product) {
-        var productDiv = document.createElement("div");
-        productDiv.classList.add("product");
-        
-        var productInfo = document.createElement("p");
-        productInfo.innerHTML = "<strong>LOB:</strong> " + product.product_type + "<br>" +
-                                 "<strong>LIAM:</strong> " + product.liam + "<br>";
-        productDiv.appendChild(productInfo);
-        
-        product.image_angles.forEach(function(image) {
-            var imageContainer = document.createElement("div");
-            imageContainer.classList.add("image-container");
+        async function fetchData(inputValue) {
+            var url = "https://dis-dev1.assetful.loblaw.ca/products/" + inputValue + "/.json";
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Cache-Control': 'no-cache',
+                        'Accept': 'application/json;charset=utf-8'
+                    },
+                    mode: "cors"
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const ndjson = await response.text();
+                const jsonData = ndjson.split('\n').map(line => JSON.parse(line));
+                displayData(jsonData);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
 
-            var img = document.createElement("img");
-            img.src = image.url + "?width=200";
-            img.alt = image.url;
-            imageContainer.appendChild(img);
+        // Function to display JSON data with images and image angles
+        function displayData(jsonData) {
+            var productsDiv = document.getElementById("products");
 
-            var imageInfo = document.createElement("div");
-            imageContainer.classList.add("image-info");
+            jsonData.forEach(function (product) {
+                var productDiv = document.createElement("div");
+                productDiv.classList.add("product");
 
-            var languageInfo = document.createElement("p");
-            languageInfo.textContent = "Language: " + image.langauge;
-            imageContainer.appendChild(languageInfo);
+                var productInfo = document.createElement("p");
+                productInfo.innerHTML = "<strong>LOB:</strong> " + product.product_type + "<br>" +
+                    "<strong>LIAM:</strong> " + product.liam + "<br>";
+                productDiv.appendChild(productInfo);
 
-            var presentationOrderInfo = document.createElement("p");
-            presentationOrderInfo.textContent = "Presentation Order: " + image.presentationOrder;
-            imageContainer.appendChild(presentationOrderInfo);
+                product.image_angles.forEach(function (image) {
+                    var imageContainer = document.createElement("div");
+                    imageContainer.classList.add("image-container");
 
-            var presentationTypeInfo = document.createElement("p");
-            presentationTypeInfo.textContent = "Presentation Type: " + image.presentation_type;
-            imageContainer.appendChild(presentationTypeInfo);
+                    var img = document.createElement("img");
+                    img.src = image.url + "?width=200";
+                    img.alt = image.url;
+                    imageContainer.appendChild(img);
 
-            var angleInfo = document.createElement("p");
-            angleInfo.textContent = "Angle: " + image.angle;
-            imageContainer.appendChild(angleInfo);
+                    var imageInfo = document.createElement("div");
+                    imageContainer.classList.add("image-info");
 
-            var URLInfo = document.createElement("p");
-            URLInfo.textContent = "Pristine URL: " + image.url;
-            imageContainer.appendChild(URLInfo);
+                    var languageInfo = document.createElement("p");
+                    languageInfo.textContent = "Language: " + image.langauge;
+                    imageContainer.appendChild(languageInfo);
 
-            imageContainer.appendChild(imageInfo);
-            productDiv.appendChild(imageContainer);
-        });
+                    var presentationOrderInfo = document.createElement("p");
+                    presentationOrderInfo.textContent = "Presentation Order: " + image.presentationOrder;
+                    imageContainer.appendChild(presentationOrderInfo);
 
-        productsDiv.appendChild(productDiv);
-    });
-}
+                    var presentationTypeInfo = document.createElement("p");
+                    presentationTypeInfo.textContent = "Presentation Type: " + image.presentation_type;
+                    imageContainer.appendChild(presentationTypeInfo);
 
-</script>
-<input type="text" id="queryInput" placeholder="eg: jf/21371964_ea">
-<button onclick="performQuery()">Submit</button>
+                    var angleInfo = document.createElement("p");
+                    angleInfo.textContent = "Angle: " + image.angle;
+                    imageContainer.appendChild(angleInfo);
 
-<div id="response"></div>
-<div id="products"></div>
+                    var URLInfo = document.createElement("p");
+                    URLInfo.textContent = "Pristine URL: " + image.url;
+                    imageContainer.appendChild(URLInfo);
+
+                    imageContainer.appendChild(imageInfo);
+                    productDiv.appendChild(imageContainer);
+                });
+
+                productsDiv.appendChild(productDiv);
+            });
+        }
+
+    </script>
+    <input type="text" id="queryInput" placeholder="eg: jf/21371964_ea, abc/12345_xyz">
+    <button onclick="performQuery()">Submit</button>
+
+    <div id="response"></div>
+    <div id="products"></div>
 </body>
 
 </html>
