@@ -68,62 +68,66 @@
             }
         }
 
-        // Function to display JSON data with images and image angles
-        function displayData(jsonData, inputValue) {
-            var productsDiv = document.getElementById("products");
+// Function to display JSON data with images and image angles
+function displayData(jsonData, inputValue) {
+    var productsDiv = document.getElementById("products");
 
-            var queryContainer = document.createElement("div");
-            queryContainer.innerHTML = "<h3>Query Input: " + inputValue + "</h3>";
-            productsDiv.appendChild(queryContainer);
+    var queryContainer = document.createElement("div");
+    queryContainer.innerHTML = "<h3>Query Input: " + inputValue + "</h3>";
+    productsDiv.appendChild(queryContainer);
 
-            jsonData.forEach(function (product) {
-                var productDiv = document.createElement("div");
-                productDiv.classList.add("product");
+    jsonData.forEach(function (product) {
+        var productDiv = document.createElement("div");
+        productDiv.classList.add("product");
 
-                var productInfo = document.createElement("p");
-                productInfo.innerHTML = "<strong>LOB:</strong> " + product.product_type + "<br>" +
-                    "<strong>LIAM:</strong> " + product.liam + "<br>";
-                productDiv.appendChild(productInfo);
+        var productInfo = document.createElement("p");
+        productInfo.innerHTML = "<strong>LOB:</strong> " + product.product_type + "<br>" +
+            "<strong>LIAM:</strong> " + product.liam + "<br>";
+        productDiv.appendChild(productInfo);
 
-                product.image_angles.forEach(function (image) {
-                    var imageContainer = document.createElement("div");
-                    imageContainer.classList.add("image-container");
+        // Sort image angles by presentationOrder
+        product.image_angles.sort((a, b) => a.presentationOrder - b.presentationOrder);
 
-                    var img = document.createElement("img");
-                    img.src = image.url + "?width=200";
-                    img.alt = image.url;
-                    imageContainer.appendChild(img);
+        product.image_angles.forEach(function (image) {
+            var imageContainer = document.createElement("div");
+            imageContainer.classList.add("image-container");
 
-                    var imageInfo = document.createElement("div");
-                    imageContainer.classList.add("image-info");
+            var img = document.createElement("img");
+            img.src = image.url + "?width=200";
+            img.alt = image.url;
+            imageContainer.appendChild(img);
 
-                    var languageInfo = document.createElement("p");
-                    languageInfo.textContent = "Language: " + image.language;
-                    imageContainer.appendChild(languageInfo);
+            var imageInfo = document.createElement("div");
+            imageContainer.classList.add("image-info");
 
-                    var presentationOrderInfo = document.createElement("p");
-                    presentationOrderInfo.textContent = "Presentation Order: " + image.presentationOrder;
-                    imageContainer.appendChild(presentationOrderInfo);
+            var languageInfo = document.createElement("p");
+            languageInfo.textContent = "Language: " + image.language;
+            imageContainer.appendChild(languageInfo);
 
-                    var presentationTypeInfo = document.createElement("p");
-                    presentationTypeInfo.textContent = "Presentation Type: " + image.presentation_type;
-                    imageContainer.appendChild(presentationTypeInfo);
+            var presentationOrderInfo = document.createElement("p");
+            presentationOrderInfo.textContent = "Presentation Order: " + image.presentationOrder;
+            imageContainer.appendChild(presentationOrderInfo);
 
-                    var angleInfo = document.createElement("p");
-                    angleInfo.textContent = "Angle: " + image.angle;
-                    imageContainer.appendChild(angleInfo);
+            var presentationTypeInfo = document.createElement("p");
+            presentationTypeInfo.textContent = "Presentation Type: " + image.presentation_type;
+            imageContainer.appendChild(presentationTypeInfo);
 
-                    var URLInfo = document.createElement("p");
-                    URLInfo.textContent = "Pristine URL: " + image.url;
-                    imageContainer.appendChild(URLInfo);
+            var angleInfo = document.createElement("p");
+            angleInfo.textContent = "Angle: " + image.angle;
+            imageContainer.appendChild(angleInfo);
 
-                    imageContainer.appendChild(imageInfo);
-                    productDiv.appendChild(imageContainer);
-                });
+            var URLInfo = document.createElement("p");
+            URLInfo.textContent = "Pristine URL: " + image.url;
+            imageContainer.appendChild(URLInfo);
 
-                queryContainer.appendChild(productDiv);
-            });
-        }
+            imageContainer.appendChild(imageInfo);
+            productDiv.appendChild(imageContainer);
+        });
+
+        queryContainer.appendChild(productDiv);
+    });
+}
+
 
     </script>
     <input type="text" id="queryInput" placeholder="eg: jf/21371964_ea, abc/12345_xyz">
