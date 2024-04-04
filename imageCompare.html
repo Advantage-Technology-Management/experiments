@@ -31,6 +31,9 @@
     .image-width {
         margin-top: 5px; /* Add some margin between the image and the text */
     }
+    .pristine-image-width {
+        margin-top: 5px; /* Add some margin between the image and the text */
+    }
     .dropdown-container {
         position: fixed;
         top: 30px;
@@ -170,7 +173,7 @@
     ["joe-fresh","S4WP046868_Medium Wash_On Figure_Rear-facing.jpg, 4000 x 4000, 15.8 MB"],
     ["joe-fresh","S4WP046868_Medium Wash_On Figure_Forward-facing.jpg, 4000 x 4000, 12.4 MB"],
     ["joe-fresh","S4WR044568_White_Lay Down_Forward-facing.tif", "4000 x 4000", "56.9 MB"],
-    ["joe-fresh","S4WR044568_White_On Figure_Forward-facing.tif", "5000 x 5000", "28 MB"]]
+    ["joe-fresh","S4WP046034_White_On Figure_Forward-facing.tif", "5000 x 5000", "28 MB"]]
     ;
 
     // Function to populate the LOB dropdown
@@ -221,14 +224,16 @@
 
         var selectedImageUrl = document.getElementById('imageUrlSelect').value;
         var pristine = document.createElement('img');
-        var widthText = document.createElement('p');
-        widthText.classList.add('image-width');
+        var pristineWidthText = document.createElement('p');
+        pristineWidthText.classList.add('pristine-image-width');
+
 
         // Create and append image elements with different widths
         widths.forEach(function(width) {
             var img1 = document.createElement('img');
             var img2 = document.createElement('img');
-
+            var widthText = document.createElement('p');
+            widthText.classList.add('image-width');
 
             img1.src = "https://dis-dev1.assetful.loblaw.ca/content/dam/loblaw-companies-limited/product-staging/manual/imagequalitytest/" + 
             document.getElementById('lobSelect').value + "/" + selectedImageUrl + '/_jcr_content/renditions/cq5dam.web.2048.2048' + 
@@ -248,12 +253,13 @@
 
 
         });
+        
         pristine.src = "https://dis-dev1.assetful.loblaw.ca/content/dam/loblaw-companies-limited/product-staging/manual/imagequalitytest/" + 
         document.getElementById('lobSelect').value + "/" + selectedImageUrl + '/_jcr_content/renditions/cq5dam.web.4096.4096' + 
         document.getElementById('format').value;
         container.appendChild(pristine);
-        widthText.textContent = 'pristine';
-        container.appendChild(widthText);
+        pristineWidthText.textContent = 'pristine';
+        container.appendChild(pristineWidthText);
     }
 
     // Function to initialize the dropdown menus
