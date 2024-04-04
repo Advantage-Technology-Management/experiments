@@ -7,7 +7,7 @@
 <script>
   function parseFilenames() {
     const languages = ['en','fr','enfr'];
-    const colours = ['Light Navy','Light Blue'];
+    const colours = ['Light Navy','Light Blue',"black"];  
     const presentationStyles = ['Lay Down','On Figure','On Form','Swatch'];
     const JFAngles = ['Forward-facing','Rear-facing','Left-facing','Right-facing','Left-profile','Right-profile','Top-down','Underside'];
     const angles = ['front','angle','side','back','open','closed','beauty','banner'];
@@ -40,8 +40,15 @@
     
     filenames.forEach(function(filename) {
       // Split the filename using underscore as the delimiter
-      var noExtension = filename.trim().split('.')
+      var noExtension = filename.trim().split('.');
+      //var suom = noExtension[0].trim().split(/[_-]/);
+      
+      //console.log(suom);
       var parts = noExtension[0].trim().split('_');
+      var colourparts = parts[1].trim().split(/[-]/); 
+      var colour = colourparts[0];
+      var suom = colourparts[1];
+    
     
       var P2Line = document.createElement("p");
       var P3Line = document.createElement("p");
@@ -66,9 +73,10 @@
         if (parts[4] == 'front' && parts[5] == 'white') {
             P4Line.textContent = "VALID SDM legacy filename.  Remove front_white and lookup " + parts[0] + " as UPC";
         }
-      } 
-      else if (colours.includes(parts[1])) {
-        P2Line.textContent = "P2 is valid colour value " + parts[1] + " indicates JF";
+      }
+
+      else if (colours.includes(colour)) {
+        P2Line.textContent = "P2 is valid colour value " + colour + " indicates JF";
         if (presentationStyles.includes(parts[2]) && JFAngles.includes(parts[3])) {
             P3Line.textContent = "P3 of " + parts[2] + " and P4 of " + parts[3] + " are valid presentation type and angle";
             P4Line.textContent = "VALID JF filename - Lookup " + parts[0] + "_" + parts[1] + " as article number";
@@ -80,7 +88,7 @@
       
     
       else {
-        P2Line.textContent = "INVALID filename of uknown LOB.  P2 value " + parts[1] + " is not language or valid colour.";
+        P2Line.textContent = "INVALID filename of uknown LOB.  P2 value " + colour + " is not language or valid colour.";
       }
 
       //var line = document.createElement("div");
@@ -98,8 +106,14 @@
         
         filenamePart++;
       });
+      var colourLine = document.createElement("div");
+      if (suom !== undefined) { 
+        var colourLine = document.createElement("div");
+        colourLine.textContent = "P2 with colour and optional suom break " + colour + " " + suom;
+      }
       // Add a line break after each filename
       parsedResult.appendChild(line);
+      parsedResult.appendChild(colourLine);
       parsedResult.appendChild(P2Line);
       parsedResult.appendChild(P3Line);
       parsedResult.appendChild(P4Line);

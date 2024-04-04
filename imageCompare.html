@@ -99,7 +99,7 @@
     ["pcx","21395975_enfr_side.png, 1500 x 1500, 2.3 MB"],
     ["pcx","21395975_enfr_front.png, 1500 x 1500, 2.1 MB"],
     ["pcx","20852143_enfr_angle.png, 1500 x 1500, 994.1 KB"],
-    ["  ","4059729420855_enfr_03_front_white.jpg, 2000 x 2000, 511.3 KB"],
+    ["sdm","4059729420855_enfr_03_front_white.jpg, 2000 x 2000, 511.3 KB"],
     ["sdm","4059729420855_enfr_02_front_white.jpg, 2000 x 2000, 155.2 KB"],
     ["sdm","3614273066365_enfr_08_front_white.jpg, 2000 x 2000, 1.3 MB"],
     ["sdm","3614273066365_enfr_05_front_white.jpg, 2000 x 2000, 2.8 MB"],
@@ -168,7 +168,9 @@
     ["joe-fresh","S4WR046315_Maroon_On Figure_Left-facing.jpg, 4000 x 4000, 12.9 MB"],
     ["joe-fresh","S4WR045756_Medium Wash_On Figure_Forward-facing.jpg, 4000 x 4000, 13.5 MB"],
     ["joe-fresh","S4WP046868_Medium Wash_On Figure_Rear-facing.jpg, 4000 x 4000, 15.8 MB"],
-    ["joe-fresh","S4WP046868_Medium Wash_On Figure_Forward-facing.jpg, 4000 x 4000, 12.4 MB"]]
+    ["joe-fresh","S4WP046868_Medium Wash_On Figure_Forward-facing.jpg, 4000 x 4000, 12.4 MB"],
+    ["joe-fresh","S4WR044568_White_Lay Down_Forward-facing.tif", "4000 x 4000", "56.9 MB"],
+    ["joe-fresh","S4WR044568_White_On Figure_Forward-facing.tif", "5000 x 5000", "28 MB"]]
     ;
 
     // Function to populate the LOB dropdown
@@ -218,19 +220,16 @@
         var widths = [width1, width2, width3, width4];
 
         var selectedImageUrl = document.getElementById('imageUrlSelect').value;
+        var pristine = document.createElement('img');
+        var widthText = document.createElement('p');
+        widthText.classList.add('image-width');
 
         // Create and append image elements with different widths
         widths.forEach(function(width) {
             var img1 = document.createElement('img');
             var img2 = document.createElement('img');
 
- /*         img.src = "https://dis-dev1.assetful.loblaw.ca/content/dam/loblaw-companies-limited/product-staging/manual/imagequalitytest/" + 
-            document.getElementById('lobSelect').value + "/" + selectedImageUrl + '/_jcr_content/renditions/cq5dam.web.' + 
-            document.getElementById('size').value +'.' + document.getElementById('size').value + 
-            document.getElementById('format').value + '?width=' + width; // Append width as query parameter
-            img.alt = 'Image';
-            container.appendChild(img);
-*/
+
             img1.src = "https://dis-dev1.assetful.loblaw.ca/content/dam/loblaw-companies-limited/product-staging/manual/imagequalitytest/" + 
             document.getElementById('lobSelect').value + "/" + selectedImageUrl + '/_jcr_content/renditions/cq5dam.web.2048.2048' + 
             document.getElementById('format').value + '?width=' + width; // Append width as query parameter
@@ -242,13 +241,19 @@
             document.getElementById('format').value + '?width=' + width; // Append width as query parameter
             img2.alt = 'Image';
             container.appendChild(img2);
-
             // Add text display of image width
-            var widthText = document.createElement('p');
-            widthText.classList.add('image-width');
+
             widthText.textContent = width + 'px';
             container.appendChild(widthText);
+
+
         });
+        pristine.src = "https://dis-dev1.assetful.loblaw.ca/content/dam/loblaw-companies-limited/product-staging/manual/imagequalitytest/" + 
+        document.getElementById('lobSelect').value + "/" + selectedImageUrl + '/_jcr_content/renditions/cq5dam.web.4096.4096' + 
+        document.getElementById('format').value;
+        container.appendChild(pristine);
+        widthText.textContent = 'pristine';
+        container.appendChild(widthText);
     }
 
     // Function to initialize the dropdown menus
