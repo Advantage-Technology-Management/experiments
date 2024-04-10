@@ -139,7 +139,7 @@
     ["sdm","045496599768_enfr_04_front_white.jpg, 2000 x 2000, 1.5 MB"],
     ["sdm","045496599768_enfr_03_front_white.jpg, 2000 x 2000, 1.5 MB"],
     ["sdm","045496599768_enfr_02_front_white.jpg, 2000 x 2000, 1,014.6 KB"],
-    ["sdm","3614273066365_enfr_05 copy.png, 2000 x 2000, 5.8 MB"],
+    ["sdm","3614273066365_enfr_05 copy.jpg, 2000 x 2000, 5.8 MB"],
     ["joe-fresh","S4WR046677_Pink_Swatch_Forward-facing.jpg, 2000 x 1481, 1.5 MB"],
     ["joe-fresh","S4WR046677_Pink_Lay Down_Rear-facing.jpg, 1080 x 1080, 276.1 KB"],
     ["joe-fresh","S4WR046677_Pink_Lay Down_Left-facing.jpg, 1080 x 1080, 209.3 KB"],
@@ -176,7 +176,7 @@
     ["joe-fresh","S4WP046868_Medium Wash_On Figure_Forward-facing.jpg, 4000 x 4000, 12.4 MB"],
     ["joe-fresh","S4WR044568_White_Lay Down_Forward-facing.tif, 4000 x 4000, 56.9 MB"],
     ["joe-fresh","S4WP046034_White_On Figure_Forward-facing.tif, 5000 x 5000, 28 MB"],
-    ["joe-fresh","S4WP046868_Medium Wash_On Figure_Forward-facing copy.png, 4000 x 4000, 26.6 MB"]];
+    ["joe-fresh","S4WP046868_Medium Wash_On Figure_Forward-facing copy.tif, 4000 x 4000, 26.6 MB"]];
 
     // Function to populate the LOB dropdown
     function populateLobDropdown() {
@@ -260,7 +260,7 @@
         document.getElementById('lobSelect').value + "/" + selectedImageUrl + '/_jcr_content/renditions/cq5dam.web.4096.4096' + 
         document.getElementById('format').value;
         container.appendChild(pristine);
-        pristineWidthText.textContent = 'pristine';
+        pristineWidthText.textContent = 'pristine' + getImageSizeInBytes(pristine);
         container.appendChild(pristineWidthText);
     }
 
@@ -280,6 +280,25 @@
         });
 
         //displayImagesWithVariations();
+    }
+
+    function getImageSizeInBytes(url) {
+        return new Promise((resolve, reject) => {
+            fetch(url)
+            .then(response => {
+                const reader = response.body.getReader();
+                let bytesRead = 0;
+                reader.read().then(function processResult(result) {
+                    if (result.done) {
+                        resolve(bytesRead);
+                        return;
+                    }
+                    bytesRead += result.value.length;
+                    return reader.read().then(processResult);
+                });
+            })
+            .catch(error => reject(error));
+        });
     }
 
     // Initialize the dropdown menus
