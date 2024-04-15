@@ -37,6 +37,20 @@
 
     <h2>Display Images for Given LOBs and LIAMs</h2>
 
+    <div class="env">
+        <label for="env">Environment</label>
+        <select name="env" id="env">
+        <option value="dev1">dev1</option>
+        <option value="stage">stage</option>
+        </select>
+    </div>
+    <input type="text" id="queryInput" placeholder="eg: jf/21371964_ea, abc/12345_xyz">
+    <button onclick="performQuery()">Submit</button>
+
+    <div id="response"></div>
+    <div id="products"></div>
+
+
     <script>
 
         async function performQuery() {
@@ -134,18 +148,7 @@ function displayData(jsonData, inputValue) {
 
 
     </script>
-    <div class="env">
-        <label for="env">Environment</label>
-        <select name="env" id="env">
-        <option value="dev1">dev1</option>
-        <option value="stage">stage</option>
-        </select>
-    </div>
-    <input type="text" id="queryInput" placeholder="eg: jf/21371964_ea, abc/12345_xyz">
-    <button onclick="performQuery()">Submit</button>
 
-    <div id="response"></div>
-    <div id="products"></div>
 </body>
 
 </html>
