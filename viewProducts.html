@@ -48,10 +48,10 @@
                 await fetchData(inputValue.trim());
             }
         }
-        
+    
 
         async function fetchData(inputValue) {
-            var url = "https://dis-" + env + ".assetful.loblaw.ca/products/" + inputValue + "/.json";
+            var url = "https://dis-" + document.getElementById('env').value + ".assetful.loblaw.ca/products/" + inputValue + "/.json";
             try {
                 const response = await fetch(url, {
                     method: 'GET',
