@@ -51,7 +51,7 @@
         
 
         async function fetchData(inputValue) {
-            var url = "https://dis-dev1.assetful.loblaw.ca/products/" + inputValue + "/.json";
+            var url = "https://dis-" + env + ".assetful.loblaw.ca/products/" + inputValue + "/.json";
             try {
                 const response = await fetch(url, {
                     method: 'GET',
@@ -134,6 +134,13 @@ function displayData(jsonData, inputValue) {
 
 
     </script>
+    <div class="env">
+        <label for="env">Environment</label>
+        <select name="env" id="env">
+        <option value="dev1">dev1</option>
+        <option value="stage">stage</option>
+        </select>
+    </div>
     <input type="text" id="queryInput" placeholder="eg: jf/21371964_ea, abc/12345_xyz">
     <button onclick="performQuery()">Submit</button>
 
