@@ -22,8 +22,8 @@
 
         .image-container img {
             margin-right: 10px;
-            max-width: 300px;
-            max-height: 300px;
+            max-width: 200px;
+            max-height: 200px;
         }
 
         .image-info {
@@ -65,7 +65,7 @@
     
 
         async function fetchData(inputValue) {
-            var url = "https://dis-" + document.getElementById('env').value + ".assetful.loblaw.ca/products/" + inputValue + "/.json";
+            var url = "https://dis-" + document.getElementById('env').value + ".assetful.loblaw.ca/products/" + inputValue + "/.addonjson";
             try {
                 const response = await fetch(url, {
                     method: 'GET',
@@ -117,6 +117,20 @@ function displayData(jsonData, inputValue) {
 
             var imageInfo = document.createElement("div");
             imageContainer.classList.add("image-info");
+
+            var actualImageFormatInfo = document.createElement("p");
+            actualImageFormatInfo.textContent = "Language: " + image.actualImageFormat;
+            imageContainer.appendChild(actualImageFormatInfo);
+
+            var actualImageFacingInfo = document.createElement("p");
+            actualImageFacingInfo.textContent = "Language: " + image.actualImageFacing;
+            imageContainer.appendChild(actualImageFacingInfo);
+
+            var actuallanguageInfo = document.createElement("p");
+            actuallanguageInfo.textContent = "Language: " + image.actuaLanguage;
+            imageContainer.appendChild(actuallanguageInfo);
+
+
 
             var languageInfo = document.createElement("p");
             languageInfo.textContent = "Language: " + image.language;
