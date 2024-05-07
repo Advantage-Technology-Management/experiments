@@ -35,7 +35,7 @@
 
 <body>
 
-    <h2>Display Images for Given LOBs and LIAM</h2>
+    <h2>Display Images for Given LOBs and LIAM 2</h2>
 
     <div class="env">
         <label for="env">Environment</label>
@@ -103,6 +103,27 @@ function displayData(jsonData, inputValue) {
             "<strong>LIAM:</strong> " + product.liam + "<br>";
         productDiv.appendChild(productInfo);
 
+        var articleIDsInfo = document.createElement("p");
+        articleIDsInfo.textContent = "ArticleIDs: " + product.actualArticleIDs;
+        productDiv.appendChild(articleIDsInfo);
+
+        var scancodesInfo = document.createElement("p");
+        scancodesInfo.textContent = "Scancodes: " + product.actualScancodes;
+        productDiv.appendChild(scancodesInfo);
+
+        var gTINsInfo = document.createElement("p");
+        gTINsInfo.textContent = "Scancodes: " + product.actualGTINs;
+        productDiv.appendChild(gTINsInfo);
+
+        var productStatusInfo = document.createElement("p");
+        productStatusInfo.textContent = "Product Status: " + product.actualProductStatus;
+        productDiv.appendChild(productStatusInfo);
+
+
+
+
+
+
         // Sort image angles by presentationOrder
         product.image_angles.sort((a, b) => a.presentationOrder - b.presentationOrder);
 
@@ -118,19 +139,18 @@ function displayData(jsonData, inputValue) {
             var imageInfo = document.createElement("div");
             imageContainer.classList.add("image-info");
 
-            var actualImageFormatInfo = document.createElement("p");
-            actualImageFormatInfo.textContent = "Language: " + image.actualImageFormat;
-            imageContainer.appendChild(actualImageFormatInfo);
+
+            var imageFormatInfo = document.createElement("p");
+            imageFormatInfo.textContent = "Format: " + image.actualImageFormat;
+            imageContainer.appendChild(ImageFormatInfo);
 
             var actualImageFacingInfo = document.createElement("p");
-            actualImageFacingInfo.textContent = "Language: " + image.actualImageFacing;
+            actualImageFacingInfo.textContent = "Facing: " + image.actualImageFacing;
             imageContainer.appendChild(actualImageFacingInfo);
 
             var actuallanguageInfo = document.createElement("p");
-            actuallanguageInfo.textContent = "Language: " + image.actuaLanguage;
+            actuallanguageInfo.textContent = "Actual Language: " + image.actuaLanguage;
             imageContainer.appendChild(actuallanguageInfo);
-
-
 
             var languageInfo = document.createElement("p");
             languageInfo.textContent = "Language: " + image.language;
