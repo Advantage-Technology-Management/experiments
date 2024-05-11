@@ -112,7 +112,7 @@ function displayData(jsonData, inputValue) {
         productDiv.appendChild(scancodesInfo);
 
         var gTINsInfo = document.createElement("p");
-        gTINsInfo.textContent = "Scancodes: " + product.actualGTINs;
+        gTINsInfo.textContent = "GTINS: " + product.actualGTINs;
         productDiv.appendChild(gTINsInfo);
 
         var productStatusInfo = document.createElement("p");
@@ -138,6 +138,22 @@ function displayData(jsonData, inputValue) {
 
             var imageInfo = document.createElement("div");
             imageContainer.classList.add("image-info");
+
+            var articleIDsInfo = document.createElement("p");
+            articleIDsInfo.textContent = "ArticleIDs: " + product.actualArticleIDs;
+            productDiv.appendChild(articleIDsInfo);
+    
+            var scancodesInfo = document.createElement("p");
+            scancodesInfo.textContent = "Scancodes: " + product.actualScancodes;
+            productDiv.appendChild(scancodesInfo);
+    
+            var gTINsInfo = document.createElement("p");
+            gTINsInfo.textContent = "GTINS: " + product.actualGTINs;
+            productDiv.appendChild(gTINsInfo);
+    
+            var productStatusInfo = document.createElement("p");
+            productStatusInfo.textContent = "Product Status: " + product.actualProductStatus;
+            productDiv.appendChild(productStatusInfo);
 
 
             var imageFormatInfo = document.createElement("p");
