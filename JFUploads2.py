@@ -11,7 +11,7 @@ PASSWORD="S%j7?v<H{S3nTWgD[zjV0c*y"
 
 PROTOCOL = 'https://'
 HOST = 'author-loblaw-stage.adobecqms.net'
-SERVICE_PATH = '/api/assets/loblaw-companies-limited/product-staging/manual/greg-test/gregtestfolder2/'
+SERVICE_PATH = '/api/assets/loblaw-companies-limited/product-staging/manual/greg-test/gregtestnotranslation/'
 HEADERS= {'Host':'author-loblaw-stage.adobecqms.net'}
 
 # Function to upload files to the endpoint
@@ -28,7 +28,13 @@ def upload_file(url, log_file):
             # Retrieve the Content-Disposition header from the GET response
             content_disposition = response.headers.get('Content-Disposition', '')
             content_disposition_parts = content_disposition.split("=")
-            postFilename = content_disposition_parts[1].strip('"').strip()
+            postFilename = content_disposition_parts[1].strip('"').strip().upper()
+            #postFilename = postFilename.replace("_LIGHT","_LT.")
+            #postFilename = postFilename.replace("_DARK","_DK.")
+            #postFilename = postFilename.replace("_MEDIUM","_MED")
+            postFilename = postFilename.replace(".TIF","_SPRING 1 MEN 2024.TIF")
+            
+            
             print("Filename="+postFilename)
             # Set up the headers for the POST request, including Content-Type from Content-Disposition
             postHeaders = {
