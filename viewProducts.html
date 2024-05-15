@@ -125,7 +125,7 @@ function displayData(jsonData, inputValue) {
 
 
         // Sort image angles by presentationOrder
-        product.image_angles.sort((a, b) => a.presentationOrder - b.presentationOrder);
+        product.image_angles.sort((a, b) => a.presentation_order - b.presentation_order);
 
         product.image_angles.forEach(function (image) {
             var imageContainer = document.createElement("div");
