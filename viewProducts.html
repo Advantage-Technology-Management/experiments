@@ -155,7 +155,7 @@ function displayData(jsonData, inputValue) {
             productStatusInfo.textContent = "Product Status: " + product.actualProductStatus;
             productDiv.appendChild(productStatusInfo);
 
-
+/**
             var imageFormatInfo = document.createElement("p");
             imageFormatInfo.textContent = "Format: " + image.actualImageFormat;
             imageContainer.appendChild(imageFormatInfo);
@@ -163,7 +163,7 @@ function displayData(jsonData, inputValue) {
             var actualImageFacingInfo = document.createElement("p");
             actualImageFacingInfo.textContent = "Facing: " + image.actualImageFacing;
             imageContainer.appendChild(actualImageFacingInfo);
-
+*/
             var actuallanguageInfo = document.createElement("p");
             actuallanguageInfo.textContent = "Actual Language: " + image.actuaLanguage;
             imageContainer.appendChild(actuallanguageInfo);
@@ -172,14 +172,6 @@ function displayData(jsonData, inputValue) {
             languageInfo.textContent = "Language: " + image.language;
             imageContainer.appendChild(languageInfo);
 
-            var presentationOrderInfo = document.createElement("p");
-            presentationOrderInfo.textContent = "Presentation Order: " + image.presentation_order;
-            imageContainer.appendChild(presentationOrderInfo);
-
-            var isPrimaryInfo = document.createElement("p");
-            isPrimaryInfo.textContent = "Is Primary: " + image.is_primary;
-            imageContainer.appendChild(isPrimaryInfo);
-
             var presentationTypeInfo = document.createElement("p");
             presentationTypeInfo.textContent = "Presentation Type: " + image.presentation_type;
             imageContainer.appendChild(presentationTypeInfo);
@@ -187,6 +179,14 @@ function displayData(jsonData, inputValue) {
             var angleInfo = document.createElement("p");
             angleInfo.textContent = "Angle: " + image.angle;
             imageContainer.appendChild(angleInfo);
+
+            var presentationOrderInfo = document.createElement("p");
+            presentationOrderInfo.textContent = "Presentation Order: " + image.presentation_order;
+            imageContainer.appendChild(presentationOrderInfo);
+
+            var isPrimaryInfo = document.createElement("p");
+            isPrimaryInfo.textContent = "Is Primary: " + image.is_primary;
+            imageContainer.appendChild(isPrimaryInfo);
 
             var URLInfo = document.createElement("p");
             URLInfo.textContent = "Pristine URL: " + image.url;
