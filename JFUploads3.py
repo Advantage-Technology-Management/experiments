@@ -1,7 +1,6 @@
 import requests
 import csv
 import threading
-import urllib.parse
 
 # Global lock for file writing
 file_lock = threading.Lock()
