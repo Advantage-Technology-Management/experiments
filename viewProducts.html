@@ -52,43 +52,43 @@
     <div id="products"></div>
 
 
-    <script>
+<script>
 
-        async function performQuery() {
-            var inputValues = document.getElementById("queryInput").value.split(',');
-            var productsDiv = document.getElementById("products");
-            productsDiv.innerHTML = ''; // Clear previous results
-            
-            for (let inputValue of inputValues) {
-                await fetchData(inputValue.trim());
-            }
+    async function performQuery() {
+        var inputValues = document.getElementById("queryInput").value.split(',');
+        var productsDiv = document.getElementById("products");
+        productsDiv.innerHTML = ''; // Clear previous results
+        
+        for (let inputValue of inputValues) {
+            await fetchData(inputValue.trim());
         }
-    
+    }
 
-        async function fetchData(inputValue) {
-            var url = "https://dis-" + document.getElementById('env').value + ".assetful.loblaw.ca/products/" + inputValue + "/.addonjson";
-            try {
-                const response = await fetch(url, {
-                    method: 'GET',
-                    headers: {
-                        'Cache-Control': 'no-cache',
-                        'Accept': 'application/json;charset=utf-8'
-                    },
-                    mode: "cors"
-                });
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const ndjson = await response.text();
-                const jsonData = ndjson.split('\n').map(line => JSON.parse(line));
-                displayData(jsonData, inputValue);
-            } catch (error) {
-                console.error('Error:', error);
+
+    async function fetchData(inputValue) {
+        var url = "https://dis-" + document.getElementById('env').value + ".assetful.loblaw.ca/products/" + inputValue + "/.addonjson";
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Cache-Control': 'no-cache',
+                    'Accept': 'application/json;charset=utf-8'
+                },
+                mode: "cors"
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
+            const ndjson = await response.text();
+            const jsonData = ndjson.split('\n').map(line => JSON.parse(line));
+            displayData(jsonData, inputValue);
+        } catch (error) {
+            console.error('Error:', error);
         }
+    }
 
-// Function to display JSON data with images and image angles
-function displayData(jsonData, inputValue) {
+    // Function to display JSON data with images and image angles
+    function displayData(jsonData, inputValue) {
     var productsDiv = document.getElementById("products");
 
     var queryContainer = document.createElement("div");
@@ -104,7 +104,7 @@ function displayData(jsonData, inputValue) {
             "<strong>LIAM:</strong> " + product.liam + "<br>";
         productDiv.appendChild(productInfo);
 
-     /**   var articleIDsInfo = document.createElement("p");
+        /**   var articleIDsInfo = document.createElement("p");
         articleIDsInfo.textContent = "ArticleIDs: " + product.actualArticleIDs;
         productDiv.appendChild(articleIDsInfo);
 
@@ -119,10 +119,10 @@ function displayData(jsonData, inputValue) {
         var productStatusInfo = document.createElement("p");
         productStatusInfo.textContent = "Product Status: " + product.actualProductStatus;
         productDiv.appendChild(productStatusInfo);
-**/
+    */
 
 
-//sdm/3980009909
+    //sdm/3980009909
 
 
         // Sort image angles by presentationOrder
@@ -140,23 +140,23 @@ function displayData(jsonData, inputValue) {
             var imageInfo = document.createElement("div");
             imageContainer.classList.add("image-info");
 
+            /**
             var articleIDsInfo = document.createElement("p");
             articleIDsInfo.textContent = "ArticleIDs: " + product.actualArticleIDs;
             productDiv.appendChild(articleIDsInfo);
-    
+
             var scancodesInfo = document.createElement("p");
             scancodesInfo.textContent = "Scancodes: " + product.actualScancodes;
             productDiv.appendChild(scancodesInfo);
-    
+
             var gTINsInfo = document.createElement("p");
             gTINsInfo.textContent = "GTINS: " + product.actualGTINs;
             productDiv.appendChild(gTINsInfo);
-    
+
             var productStatusInfo = document.createElement("p");
             productStatusInfo.textContent = "Product Status: " + product.actualProductStatus;
             productDiv.appendChild(productStatusInfo);
 
-/**
             var imageFormatInfo = document.createElement("p");
             imageFormatInfo.textContent = "Format: " + image.actualImageFormat;
             imageContainer.appendChild(imageFormatInfo);
@@ -165,13 +165,13 @@ function displayData(jsonData, inputValue) {
             actualImageFacingInfo.textContent = "Facing: " + image.actualImageFacing;
             imageContainer.appendChild(actualImageFacingInfo);
             jf/S4MR044172
-*/
+    */
             
-/**
+    /**
             var actuallanguageInfo = document.createElement("p");
             actuallanguageInfo.textContent = "Actual Language: " + image.actuaLanguage;
             imageContainer.appendChild(actuallanguageInfo);
-*/
+    */
             var languageInfo = document.createElement("p");
             languageInfo.textContent = "Language: " + image.language;
             imageContainer.appendChild(languageInfo);
@@ -202,10 +202,10 @@ function displayData(jsonData, inputValue) {
 
         queryContainer.appendChild(productDiv);
     });
-}
+    }
 
 
-    </script>
+</script>
 
 </body>
 
