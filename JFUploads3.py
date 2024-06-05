@@ -27,12 +27,6 @@ def upload_file(url, filename, folder, log_file):
             print("GET 200 headers=",response.headers)
             # Retrieve the Content-Disposition header from the GET response
             content_disposition = response.headers.get('Content-Disposition', '')
-            #content_disposition_parts = content_disposition.split("=")
-            #postFilename = content_disposition_parts[1].strip('"').strip().upper()
-            #postFilename = postFilename.replace("_LIGHT","_LT.")
-            #postFilename = postFilename.replace("_DARK","_DK.")
-            #postFilename = postFilename.replace("_MEDIUM","_MED")
-            #postFilename = postFilename.replace(".TIF","_SPRING 1 MEN 2024.TIF")
             postFilename = f"{folder}/{filename}"
             
             
@@ -74,16 +68,10 @@ def upload_file(url, filename, folder, log_file):
 
 # Function to handle file uploads in threads
 def handle_uploads(images, log_file):
-    #threads = []
+
     for image in images:
         upload_file(image[0], image[1], image[2], log_file)
-        #thread = threading.Thread(target=upload_file, args=(image[0], image[1], image[2], log_file))  # url[0] is the URL in the first column
-        #threads.append(thread)
-        #thread.start()
 
-    # Wait for all threads to finish
-    #for thread in threads:
-     #   thread.join()
 
 # Read URLs from CSV file
 def read_images_from_csv(csv_file):
