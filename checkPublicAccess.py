@@ -1,58 +1,61 @@
-import multiprocessing as mp
-import time
+import csv
+import requests
+import threading
+from queue import Queue
 
-inputfile = 'greg.txt'
-results = 'resultsfile.txt'
+# Configure the number of worker threads
+NUM_WORKERS = 10
 
-def worker(arg, q):
-    '''stupidly simulates long running process'''
-    start = time.clock()
-    s = 'this is a test'
-    txt = s
-    for i in range(200000):
-        txt += s 
-    done = time.clock() - start
-    with open(results, 'rb') as f:
-        size = len(f.read())
-    res = 'Process' + str(arg), str(size), done
-    q.put(res)
-    return res
+# Files
+INPUT_FILE = './urltocheck.csv'
+OUTPUT_FILE = 'results.log'
 
-def listener(q):
-    '''listens for messages on the q, writes to file. '''
+# Create a queue to hold the URLs
+url_queue = Queue()
 
-    with open(results, 'w') as f:
-        while 1:
-            m = q.get()
-            if m == 'kill':
-                f.write('killed')
-                break
-            f.write(str(m) + '\n')
-            f.flush()
+# Lock for logging to avoid race conditions
+log_lock = threading.Lock()
+
+def read_urls(file_path):
+    """Reads URLs from a CSV file and adds them to the queue."""
+    with open(file_path, mode='r') as file:
+        csv_reader = csv.reader(file)
+        for row in csv_reader:
+            url_queue.put(row[0])
+
+def check_url():
+    """Worker function to check the response code of a URL."""
+    while not url_queue.empty():
+        url = url_queue.get()
+        try:
+            response = requests.get(url)
+            code = response.status_code
+        except requests.RequestException as e:
+
+            with log_lock:
+                with open(OUTPUT_FILE, mode='a') as log_file:
+                    log_file.write(f"{url},{e}\n")
+        
+        with log_lock:
+            with open(OUTPUT_FILE, mode='a') as log_file:
+                log_file.write(f"{url},{code},{len(response.content)}\n")
+        
+        url_queue.task_done()
 
 def main():
-    #must use Manager queue here, or will not work
-    manager = mp.Manager()
-    q = manager.Queue()    
-    pool = mp.Pool(mp.cpu_count() + 2)
-
-    #put listener to work first
-    watcher = pool.apply_async(listener, (q,))
-
-    #fire off workers
-    jobs = []
-    for i in range(80):
-        job = pool.apply_async(worker, (i, q))
-        jobs.append(job)
-
-    # collect results from the workers through the pool result queue
-    for job in jobs: 
-        job.get()
-
-    #now we are done, kill the listener
-    q.put('kill')
-    pool.close()
-    pool.join()
+    # Read URLs from the input file
+    read_urls(INPUT_FILE)
+    
+    # Create worker threads
+    threads = []
+    for _ in range(NUM_WORKERS):
+        thread = threading.Thread(target=check_url)
+        thread.start()
+        threads.append(thread)
+    
+    # Wait for all threads to finish
+    for thread in threads:
+        thread.join()
 
 if __name__ == "__main__":
-   main()
+    main()
