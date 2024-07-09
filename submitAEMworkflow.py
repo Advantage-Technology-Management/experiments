@@ -9,7 +9,7 @@ from queue import Queue
 NUM_WORKERS = 1
 
 # Files
-INPUT_FILE = './submitAEMworkflow.csv'
+INPUT_FILE = './pcxtoppw.csv'
 OUTPUT_FILE = 'submitAEMworkflowresults.log'
 
 USERNAME='admin'
